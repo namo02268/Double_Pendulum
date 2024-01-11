@@ -12,6 +12,16 @@ class Transform {
     return mat;
   }
 
+  GetLocalMatrixInv() {
+    let mat = mat4.create();
+    mat4.translate(mat, mat, this.#m_position);
+    mat4.rotateX(mat, mat, glMatrix.toRadian(this.#m_rotation[0]));
+    mat4.rotateY(mat, mat, glMatrix.toRadian(this.#m_rotation[1]));
+    mat4.rotateZ(mat, mat, glMatrix.toRadian(this.#m_rotation[2]));
+    mat4.scale(mat, mat, this.#m_scale);
+    return mat;
+  }
+
   GetPosition() { return this.#m_position; }
   GetRotation() { return this.#m_rotation; }
   GetScale() { return this.#m_scale; }

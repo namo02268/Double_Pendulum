@@ -48,6 +48,8 @@ class Rectangle extends Model {
   constructor(width, height) {
     super();
 
+    this.#m_width = width;
+    this.#m_height = height;
     let vertices = [];
     vertices.push(-0.5 * width, -0.5 * height, 0.0);
     vertices.push(-0.5 * width, 0.5 * height, 0.0);
@@ -60,6 +62,23 @@ class Rectangle extends Model {
     this.IBO.SetData(indices.length, indices);
     this.VAO.BindAttribute(this.VBO);
   }
+
+  SetCenter(center) {
+    let vertices = [];
+    vertices.push(-0.5 * this.#m_width + center[0], -0.5 * this.#m_height + center[1], center[2]);
+    vertices.push(-0.5 * this.#m_width + center[0], 0.5 * this.#m_height + center[1], center[2]);
+    vertices.push(0.5 * this.#m_width + center[0], 0.5 * this.#m_height + center[1], center[2]);
+    vertices.push(0.5 * this.#m_width + center[0], -0.5 * this.#m_height + center[1], center[2]);
+    let indices = [0, 1, 3, 1, 3, 2];
+
+    this.VAO.Bind();
+    this.VBO.SetData(vertices.length, vertices);
+    this.IBO.SetData(indices.length, indices);
+    this.VAO.BindAttribute(this.VBO);
+  }
+
+  #m_width;
+  #m_height;
 }
 
 export { Model, Sphere, Rectangle };
