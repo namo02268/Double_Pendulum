@@ -35,7 +35,7 @@ class Scene {
     this.#m_doublePendulum.Update(0);
 
     // Buffer
-    this.#m_centerSphere = new Sphere(0.1, 64);
+    this.#m_centerSphere = new Sphere(0.15, 64);
 
     this.#m_sphere_1 = new Sphere(0.1, 64);
     this.#m_sphere_2 = new Sphere(0.1, 64);
@@ -43,6 +43,24 @@ class Scene {
     this.#m_rod_1.transform.TranslateY(-0.5);
     this.#m_rod_2 = new Rectangle(0.05, 2);
     this.#m_rod_2.SetCenter([0.0, -1.0, 0.0]);
+
+    document.querySelector(".resetButton").addEventListener("click", () => {
+      this.#m_doublePendulum.Reset();
+      document.querySelector('.M1').value = 1.0;
+      document.querySelector('.M2').value = 1.0;
+      document.querySelector('.L1').value = 1.0;
+      document.querySelector('.L2').value = 1.0;
+      this.#m_oldM1 = 1.0;
+      this.#m_oldM2 = 1.0;
+      this.#m_oldL1 = 1.0;
+      this.#m_oldL2 = 1.0;
+      this.#m_rod_1 = new Rectangle(0.05, 1.0);
+      this.#m_rod_1.transform.TranslateY(-1.0 / 2);
+      this.#m_rod_2 = new Rectangle(0.05, 1.0);
+      this.#m_rod_2.SetCenter([0.0, 1.0 / 2, 0.0]);
+      this.#m_sphere_1 = new Sphere(1.0 / 18 + 0.1, 64);
+      this.#m_sphere_1 = new Sphere(1.0 / 18 + 0.1, 64);
+    });
   }
 
   // 描画
@@ -91,6 +109,36 @@ class Scene {
     this.#m_window.Resize();
     this.#m_inputHandler.Update();
     this.#m_doublePendulum.Update(dt);
+
+    const L1Value = document.querySelector('.L1').value;
+    if (this.#m_oldL1 !== L1Value) {
+      this.#m_doublePendulum.SetL1(L1Value);
+      this.#m_oldL1 = L1Value;
+      this.#m_rod_1 = new Rectangle(0.05, L1Value);
+      this.#m_rod_1.transform.TranslateY(-L1Value / 2);
+    }
+
+    const L2Value = document.querySelector('.L2').value;
+    if (this.#m_oldL2 !== L2Value) {
+      this.#m_doublePendulum.SetL2(L2Value);
+      this.#m_oldL2 = L2Value;
+      this.#m_rod_2 = new Rectangle(0.05, L2Value);
+      this.#m_rod_2.SetCenter([0.0, -L2Value / 2, 0.0]);
+    }
+
+    const M1Value = document.querySelector('.M1').value;
+    if (this.#m_oldM1 !== M1Value) {
+      this.#m_doublePendulum.SetM1(Number(M1Value));
+      this.#m_oldM1 = M1Value;
+      this.#m_sphere_1 = new Sphere(M1Value / 20 + 0.1, 64);
+    }
+
+    const M2Value = document.querySelector('.M2').value;
+    if (this.#m_oldM2 !== M2Value) {
+      this.#m_doublePendulum.SetM2(Number(M2Value));
+      this.#m_oldM2 = M2Value;
+      this.#m_sphere_2 = new Sphere(M2Value / 20 + 0.1, 64);
+    }
   }
 
   /*---------------------------------------
@@ -107,6 +155,11 @@ class Scene {
   #m_sphere_2;
   #m_rod_1;
   #m_rod_2;
+
+  #m_oldM1 = 1.0;
+  #m_oldM2 = 1.0;
+  #m_oldL1 = 1.0;
+  #m_oldL2 = 1.0;
 }
 
 export { Scene };

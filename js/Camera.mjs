@@ -18,15 +18,29 @@ class Camera {
   }
 
   GetProjection() {
-    return mat4.ortho(
-      this.#projectionMatrix,
-      -4 * this.#aspect,
-      4 * this.#aspect,
-      -4.0,
-      4.0,
-      -4.0,
-      4.0,
-    );
+    let projection;
+    if (this.#aspect < 1.0) {
+      projection = mat4.ortho(
+        this.#projectionMatrix,
+        -4,
+        4,
+        -4.0 / this.#aspect,
+        4.0 / this.#aspect,
+        -1.0,
+        1.0,
+      );
+    } else {
+      projection = mat4.ortho(
+        this.#projectionMatrix,
+        -4 * this.#aspect,
+        4 * this.#aspect,
+        -4.0,
+        4.0,
+        -1.0,
+        1.0,
+      );
+    }
+    return projection;
   }
 }
 

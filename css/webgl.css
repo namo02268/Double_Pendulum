@@ -35,11 +35,11 @@ video {
 .UI {
   /* 横幅 */
   width: 90%;
-  height: 10%;
+  height: 100px;
   /* グリッド表示 */
   display: grid;
   /* グリッドの隙間 */
-  gap: 30px;
+  gap: 0px;
   /* グリッドを中央に配置 */
   margin: 0 auto;
   /* デフォルトは4コラム */
@@ -49,7 +49,7 @@ video {
   font-size: 1rem;
   color: black;
   position: absolute;
-  bottom: 0%;
+  bottom: 50px;
   left: 50%;
   transform: translate(-50%);
 }
@@ -62,10 +62,57 @@ video {
   box-shadow: 0 4px 15px rgba(84, 23, 227, .5);
   text-align: center;
   font-size: 1.0rem;
+  margin: 0 20px;
 }
+
+.UIBox input {
+  width: 150px;
+}
+
 
 @media (max-width: 600px) {
   .UIBox {
     font-size: 0.8rem;
   }
+
+  .UIBox input {
+    width: 90%;
+  }
+}
+
+.ButtonWrapper {
+  /* 横幅 */
+  width: 90%;
+  /* グリッド表示 */
+  display: grid;
+  /* グリッドを中央に配置 */
+  margin: 0 auto;
+  /* デフォルトは4コラム */
+  grid-template-columns: 1fr;
+
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  transform: translate(-50%);
+}
+
+.resetButton {
+  background-color: rgba(30, 30, 255, .7);
+  /* 角を丸く */
+  border-radius: 8px;
+  /* 影をつける */
+  box-shadow: 0 4px 15px rgba(84, 23, 227, .5);
+  border: none;
+  padding: 10px 0px;
+  margin: 20px;
+  text-align: center;
+  display: inline-block;
+  color: white;
+  font-weight: bold;
+  font-size: 1.0rem;
+}
+
+.resetButton:hover {
+  background-color: rgba(30, 30, 255, 1.0);
+  transition: transform 0.3s ease;
 }

@@ -16,8 +16,10 @@ function main() {
     lastFrame = currentFrame;
     document.querySelector(".fps").textContent = `${(1 / deltaTime).toFixed(2)}`;
     scene.Draw();
-    scene.Update(deltaTime);
-
+    if (deltaTime < 0.2) {
+      scene.Update(deltaTime / 2);
+      scene.Update(deltaTime / 2);
+    }
     requestAnimationFrame(render);
   }
   requestAnimationFrame(render);
